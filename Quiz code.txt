@@ -1,0 +1,90 @@
+import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+const questions = [
+  {
+    question: "What is the capital of France?",
+    options: ["Paris", "Berlin", "Madrid", "Rome"],
+    answer: "Paris",
+  },
+  {
+    question: "Which planet is known as the Red Planet?",
+    options: ["Venus", "Mars", "Jupiter", "Saturn"],
+    answer: "Mars",
+  },
+  {
+    question: "Who wrote 'To Kill a Mockingbird'?",
+    options: [
+      "Harper Lee",
+      "F. Scott Fitzgerald",
+      "Mark Twain",
+      "Jane Austen",
+    ],
+    answer: "Harper Lee",
+  },
+];
+
+export default function App() {
+  const [current, setCurrent] = useState(0);
+  const [score, setScore] = useState(0);
+  const [finished, setFinished] = useState(false);
+
+  const handleAnswer = (option) => {
+    if (option === questions[current].answer) {
+      setScore(score + 1);
+    }
+
+    if (current < questions.length - 1) {
+      setCurrent(current + 1);
+    } else {
+      setFinished(true);
+    }
+  };
+
+  const resetGame = () => {
+    setCurrent(0);
+    setScore(0);
+    setFinished(false);
+  };
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      <Card className="max-w-md w-full shadow-2xl">
+        <CardContent className="p-6">
+          {!finished ? (
+            <>
+              <h2 className="text-xl font-bold mb-4">
+                Question {current + 1} of {questions.length}
+              </h2>
+              <p className="text-lg mb-6">{questions[current].question}</p>
+              <div className="space-y-3">
+                {questions[current].options.map((option, index) => (
+                  <Button
+                    key={index}
+                    onClick={() => handleAnswer(option)}
+                    className="w-full text-left"
+                    variant="outline"
+                  >
+                    {option}
+                  </Button>
+                ))}
+              </div>
+            </>
+          ) : (
+            <div className="text-center">
+              <h2 className="text-2xl font-bold mb-4">Quiz Complete!</h2>
+              <p className="text-lg mb-4">
+                Your score: {score} / {questions.length}
+              </p>
+              <Button onClick={resetGame} className="w-full">
+                Try Again
+              </Button>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+

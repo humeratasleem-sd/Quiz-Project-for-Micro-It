@@ -1,0 +1,6 @@
+1.Tailwind CSS: Make sure Tailwind is set up in your project.
+
+2.Component Library: This uses shadcn/ui (recommended for clean UI). Replace with standard buttons if needed.
+
+3.Customization: Add difficulty levels, timer, categories, or pull questions from an API for advanced features.
+
